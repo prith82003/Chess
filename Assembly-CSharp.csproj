@@ -38,6 +38,9 @@
   <ItemGroup>
      <Compile Include="Assets\Board.cs" />
      <Compile Include="Assets\Cell.cs" />
+     <Compile Include="Assets\BoardEditor.cs" />
+     <Compile Include="Assets\Game.cs" />
+     <Compile Include="Assets\CellDisplay.cs" />
     <Reference Include="UnityEngine">
         <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.16f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
