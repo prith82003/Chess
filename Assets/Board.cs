@@ -7,6 +7,7 @@ using UnityEngine;
 public class Board : MonoBehaviour
 {
     public Vector2 firstPosition;
+
     public const int BOARD_SIZE = 8;
     static float cameraSize
     {
@@ -133,6 +134,10 @@ public class Board : MonoBehaviour
         }
         UpdateCell();
     }
-
+    public static bool CheckIfBounds(Vector2Int pos) {
+        if (pos.x >= BOARD_SIZE || pos.x < 0 || pos.y >= BOARD_SIZE || pos.y < 0 ) 
+            return false;
+        return true;
+    }
     void Start() => GenerateBoard();
 }

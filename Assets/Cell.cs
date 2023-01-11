@@ -13,6 +13,7 @@ public class Cell
     public Color boardColor;
 
     public GameObject self;
+    
 
     public Cell(ChessColor color, ChessPiece piece, Vector2Int position, GameObject self)
     {
@@ -69,12 +70,19 @@ public class Cell
 
         if (piece == ChessPiece.Pawn) // Check if piece exists diagonally to eliminate
         {
-            var cell = Board.board[position.x + 1, position.y + 1];
-            if (cell != null && cell.piece != ChessPiece.None)
-                cells.Add(cell);
-            cell = Board.board[position.x - 1, position.y + 1];
-            if (cell != null && cell.piece != ChessPiece.None)
-                cells.Add(cell);
+            Vector2Int bob = new Vector2Int(position.x + 1, position.y + 1);
+            if(Board.CheckIfBounds(bob)){
+                var cell = Board.board[bob.x,bob.y];
+                if (cell.piece != ChessPiece.None && color != cell.color)
+                    cells.Add(cell); 
+            }
+            bob = new Vector2Int(position.x - 1, position.y + 1);
+            if (Board.CheckIfBounds(bob)) {
+                var cell = Board.board[bob.x,bob.y];
+                if (cell.piece != ChessPiece.None && color != cell.color)
+                    cells.Add(cell);
+            }
+            
         }
 
         foreach (var move in moves)
@@ -83,16 +91,25 @@ public class Cell
             {
                 if (piece == ChessPiece.Pawn || piece == ChessPiece.Horse || piece == ChessPiece.King) //Only one move
                 {
-                    var cell = Board.board[position.x + m.x, position.y + m.y];
+
+                    Vector2Int pos = new Vector2Int(position.x + m.x, position.y + m.y);
+                    if (!Board.CheckIfBounds(pos))
+                        continue;
+                    var cell = Board.board[pos.x,pos.y];
+                    if ( cell.piece != ChessPiece.None && (cell.color == Game.PlayerColor || piece == ChessPiece.Pawn))
+                        continue;
                     if (cell != null)
                         cells.Add(cell);
-                    break;
+                    continue;
                 }
 
                 for (int i = 1; i < 8; i++)
                 {
-                    var cell = Board.board[position.x + m.x * i, position.y + m.y * i];
-                    if (cell == null)
+                    Vector2Int pos = new Vector2Int(position.x + m.x * i, position.y + m.y * i);
+                    if (!Board.CheckIfBounds(pos))
+                        break;
+                    var cell = Board.board[pos.x,pos.y];
+                    if (cell.piece != ChessPiece.None && cell.color == Game.PlayerColor)
                         break;
                     cells.Add(cell);
                     if (cell.piece != ChessPiece.None)
