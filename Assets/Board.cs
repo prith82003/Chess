@@ -52,10 +52,6 @@ public class Board : MonoBehaviour
         return new Vector2(x, y) * cellSize - spawnPosition;
     }
 
-    /// <summary>
-    /// Initialise the board
-    /// Spawns cells and sets their color and piece
-    /// </summary>
 
     /// <summary>
     /// Returns the chess piece that should be placed 
@@ -102,6 +98,12 @@ public class Board : MonoBehaviour
 
     public Color BlackColor;
     public Color WhiteColor;
+
+    /// <summary>
+    /// Initialise the board
+    /// Spawns cells and sets their color and piece
+    /// </summary>
+
     public void GenerateBoard()
     {
         DestroyChildren();

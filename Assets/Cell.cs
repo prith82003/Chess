@@ -110,6 +110,14 @@ public abstract class Moves
     internal abstract Vector2Int[] GetMoves();
 }
 
+public class PawnMoves : Moves
+{
+    internal override Vector2Int[] GetMoves()
+    {
+        return new Vector2Int[] { new Vector2Int(0, 1) };
+    }
+}
+
 public class BaseMoves : Moves
 {
     internal override Vector2Int[] GetMoves()

@@ -2,28 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Player { White, Black };
-
 public class Game : MonoBehaviour
 {
     public static Cell selectedCell;
+    public static ChessColor PlayerColor;
 
-    Cell SelectCell()
+    void Awake()
     {
-        var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        var hit = Physics2D.Raycast(mousePos, Vector2.zero);
-
-        if (hit.collider != null)
-        {
-            Debug.Log("Hit: " + hit.collider.gameObject.name);
-            if (hit.collider.gameObject.GetComponent<CellDisplay>() != null)
-            {
-                var cell = hit.collider.gameObject.GetComponent<CellDisplay>().cell;
-                return cell;
-            }
-        }
-
-        return null;
+        CellDisplay.OnCellSelect += DisplayMoves;
     }
 
     void ClearDisplay()
@@ -37,6 +23,7 @@ public class Game : MonoBehaviour
 
     void DisplayMoves(Cell cell)
     {
+        ClearDisplay();
         var moves = cell.GetMoves();
         foreach (var c in moves)
         {
@@ -44,17 +31,13 @@ public class Game : MonoBehaviour
         }
     }
 
+    void MovePiece(Cell cA, Cell cB)
+    {
+
+    }
+
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            ClearDisplay();
-            var cell = SelectCell();
-            if (cell != null)
-            {
-                Debug.Log("Selected Cell: (" + cell.position.x + ", " + cell.position.y + ")");
-                DisplayMoves(cell);
-            }
-        }
+
     }
 }
