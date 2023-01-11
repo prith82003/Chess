@@ -10,8 +10,9 @@ public class Cell
     public ChessColor color;
     public ChessPiece piece;
     public Vector2Int position;
+    public Color boardColor;
 
-    GameObject self;
+    public GameObject self;
 
     public Cell(ChessColor color, ChessPiece piece, Vector2Int position, GameObject self)
     {
@@ -66,7 +67,39 @@ public class Cell
 
         List<Cell> cells = new List<Cell>();
 
+        if (piece == ChessPiece.Pawn) // Check if piece exists diagonally to eliminate
+        {
+            var cell = Board.board[position.x + 1, position.y + 1];
+            if (cell != null && cell.piece != ChessPiece.None)
+                cells.Add(cell);
+            cell = Board.board[position.x - 1, position.y + 1];
+            if (cell != null && cell.piece != ChessPiece.None)
+                cells.Add(cell);
+        }
 
+        foreach (var move in moves)
+        {
+            foreach (var m in move.GetMoves())
+            {
+                if (piece == ChessPiece.Pawn || piece == ChessPiece.Horse || piece == ChessPiece.King) //Only one move
+                {
+                    var cell = Board.board[position.x + m.x, position.y + m.y];
+                    if (cell != null)
+                        cells.Add(cell);
+                    break;
+                }
+
+                for (int i = 1; i < 8; i++)
+                {
+                    var cell = Board.board[position.x + m.x * i, position.y + m.y * i];
+                    if (cell == null)
+                        break;
+                    cells.Add(cell);
+                    if (cell.piece != ChessPiece.None)
+                        break;
+                }
+            }
+        }
 
         return cells.ToArray();
     }

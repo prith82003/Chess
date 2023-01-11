@@ -27,7 +27,7 @@ public class Board : MonoBehaviour
 
     // Bottom left is 0, 0
     [SerializeField] GameObject cell;
-    public Cell[,] board;
+    public static Cell[,] board;
 
     // Chess Pieces
     public List<Sprite> dispPieces;
@@ -123,49 +123,14 @@ public class Board : MonoBehaviour
                 var i = y * BOARD_SIZE + x;
                 if (y % 2 == 0)
                     i++;
-                cellObj.GetComponent<SpriteRenderer>().color = (i % 2 == 0) ? WhiteColor : BlackColor;
+
+                var col = (i % 2 == 0) ? WhiteColor : BlackColor;
+                cellObj.GetComponent<SpriteRenderer>().color = col;
+                newCell.boardColor = col;
             }
         }
         UpdateCell();
     }
 
     void Start() => GenerateBoard();
-
-    Cell SelectCell()
-    {
-        var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        var hit = Physics2D.Raycast(mousePos, Vector2.zero);
-
-        if (hit.collider != null)
-        {
-            if (hit.collider.gameObject.GetComponent<CellDisplay>() != null)
-            {
-                var cell = hit.collider.gameObject.GetComponent<CellDisplay>().cell;
-                return cell;
-            }
-        }
-
-        return null;
-    }
-
-    void DisplayMoves(Cell cell)
-    {
-        var moves = cell.GetMoves();
-        foreach (var move in moves)
-        {
-
-        }
-    }
-
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            var cell = SelectCell();
-            if (cell != null)
-            {
-
-            }
-        }
-    }
 }
