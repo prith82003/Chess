@@ -12,6 +12,11 @@ public class Game : MonoBehaviour
         CellDisplay.OnCellSelect += DisplayMoves;
     }
 
+    void Start()
+    {
+        PlayerColor = ChessColor.White;
+    }
+
     void ClearDisplay()
     {
         var cells = FindObjectsOfType<CellDisplay>();
