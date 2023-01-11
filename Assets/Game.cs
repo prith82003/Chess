@@ -5,21 +5,33 @@ using UnityEngine;
 public class Game : MonoBehaviour
 {
     public static Cell selectedCell;
+    static Cell[] validMoves;
     public static ChessColor PlayerColor;
 
     void Awake()
     {
         CellDisplay.OnCellSelect += DisplayMoves;
+        CellDisplay.OnCellClick += MovePiece;
     }
 
     void Start()
     {
         PlayerColor = ChessColor.White;
+        selectedCell = null;
+        validMoves = null;
     }
 
-    void ClearDisplay()
+    public static void ClearDisplay(bool resetCell = false)
     {
+        Debug.Log("Clearing Display Hard Reset: " + resetCell);
+        if (resetCell)
+        {
+            validMoves = null;
+            selectedCell = null;
+        }
+
         var cells = FindObjectsOfType<CellDisplay>();
+
         foreach (var c in cells)
         {
             c.GetComponent<SpriteRenderer>().color = c.cell.boardColor;
@@ -29,8 +41,8 @@ public class Game : MonoBehaviour
     void DisplayMoves(Cell cell)
     {
         ClearDisplay();
-        var moves = cell.GetMoves();
-        foreach (var c in moves)
+        validMoves = cell.GetMoves();
+        foreach (var c in validMoves)
         {
             c.self.GetComponent<SpriteRenderer>().color = Color.green;
         }
@@ -38,11 +50,19 @@ public class Game : MonoBehaviour
 
     void MovePiece(Cell cA, Cell cB)
     {
+        foreach (var cell in validMoves)
+        {
+            if (cell == cB)
+            {
+                cB.piece = cA.piece;
+                cA.piece = ChessPiece.None;
+                cB.color = cA.color;
+                ClearDisplay(true);
+                Board.UpdateCell();
+                return;
+            }
+        }
 
-    }
-
-    private void Update()
-    {
-
+        ClearDisplay(true);
     }
 }

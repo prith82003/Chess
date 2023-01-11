@@ -21,7 +21,7 @@ public class Cell
         this.position = position;
         this.self = self;
 
-        GameObject.FindObjectOfType<Board>().UpdateCell += UpdateCell;
+        Board.UpdateCell += UpdateCell;
     }
 
     void UpdateCell()

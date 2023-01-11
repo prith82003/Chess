@@ -33,7 +33,7 @@ public class Board : MonoBehaviour
     public List<Sprite> dispPieces;
     public static List<Sprite> pieces;
 
-    public System.Action UpdateCell;
+    public static System.Action UpdateCell;
 
     private void OnValidate()
     {
