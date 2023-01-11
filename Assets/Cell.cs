@@ -44,7 +44,7 @@ public class Cell
         switch (piece)
         {
             case ChessPiece.Pawn:
-                moves.Add(new BaseMoves());
+                moves.Add(new PawnMoves());
                 break;
             case ChessPiece.Rook:
                 moves.Add(new BaseMoves());

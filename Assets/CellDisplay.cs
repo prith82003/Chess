@@ -9,7 +9,7 @@ public class CellDisplay : MonoBehaviour
     private void OnMouseDown()
     {
         Debug.Log(".Clicked: " + cell.position);
-        if (Game.selectedCell == null && cell.color == Game.PlayerColor)
+        if (cell.color == Game.PlayerColor)
         {
             Game.selectedCell = cell;
             OnCellSelect?.Invoke(cell);
