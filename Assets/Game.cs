@@ -103,9 +103,10 @@ public class Game : MonoBehaviour
 
         foreach (var cell in Board.board)
         {
-            cell.self.GetComponent<Collider>().enabled = true;
+            cell.clickable = true;
         }
 
+        PlayerColor = nextColor;
         OnTurnStart(nextColor);
     }
 
@@ -113,6 +114,8 @@ public class Game : MonoBehaviour
     {
         if (SpecialMoves.IsInCheckmate(color))
             GameOver();
+
+        Debug.Log("Color: " + color + ", Check: " + SpecialMoves.IsInCheck(color));
 
         if (SpecialMoves.IsInCheck(color))
         {
@@ -124,13 +127,13 @@ public class Game : MonoBehaviour
             foreach (var cell in Board.board)
             {
                 if (cell != King)
-                {
-                    cell.self.GetComponent<Collider>().enabled = false;
-                }
+                    cell.clickable = false;
             }
         }
     }
 
+    // TODO: Implement GameOver
+    // TODO: Regenerating the Game Board
     void GameOver()
     {
 

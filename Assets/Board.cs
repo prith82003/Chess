@@ -113,6 +113,13 @@ public class Board : MonoBehaviour
     {
         // Reset Board
         DestroyChildren();
+
+        if (board != null)
+        {
+            foreach (var cell in board)
+                cell.Remove();
+        }
+
         board = new Cell[BOARD_SIZE, BOARD_SIZE];
 
         for (int y = 0; y < BOARD_SIZE; y++)

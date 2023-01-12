@@ -15,6 +15,7 @@ public class Cell
 
     public GameObject self;
     public bool display;
+    public bool clickable;
 
     // Initialises the Cell
     public Cell(ChessColor color, ChessPiece piece, Vector2Int position, GameObject self)
@@ -24,8 +25,14 @@ public class Cell
         this.position = position;
         this.self = self;
         display = false;
+        clickable = true;
 
         Board.UpdateCell += UpdateCell;
+    }
+
+    public void Remove()
+    {
+        Board.UpdateCell -= UpdateCell;
     }
 
     /// <summary>
@@ -55,14 +62,19 @@ public class Cell
     /// Returns an Array of Cells that the Piece can Move To
     /// </summary>
     /// <returns>All Valid Cells the Piece can Move To</returns>
-    public Cell[] GetMoves()
+    public Cell[] GetMoves(bool checkExtra = false)
     {
+
+        // Debug.Log("Cell: (" + position.x + ", " + position.y + ") Piece: " + piece + " Color: " + color);
+
         // Retrieves the Types of Moves Each Piece Can Make
         List<Moves> moves = new List<Moves>();
         switch (piece)
         {
             case ChessPiece.Pawn:
                 moves.Add(new PawnMoves());
+                if (checkExtra)
+                    moves.Add(new DiagonalMoves());
                 break;
             case ChessPiece.Rook:
                 moves.Add(new BaseMoves());
@@ -107,8 +119,13 @@ public class Cell
 
         foreach (var move in moves)
         {
-            foreach (var m in move.GetMoves())
+            foreach (var b in move.GetMoves())
             {
+                var m = b;
+                // Inverts the Y Axis if the Piece is Black
+                if (color == ChessColor.Black)
+                    m.y *= -1;
+
                 // Handles the Pieces That Can Move Only Once
                 if (piece == ChessPiece.Pawn || piece == ChessPiece.Horse || piece == ChessPiece.King)
                 {
@@ -122,7 +139,10 @@ public class Cell
                         continue;
 
                     if (piece == ChessPiece.King && SpecialMoves.IsInCheck(color, cell))
+                    {
+                        Debug.Log("Skipped: (" + cell.position.x + ", " + cell.position.y + ")");
                         continue;
+                    }
 
                     if (cell != null)
                         cells.Add(cell);

@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class SpecialMoves
 {
 
@@ -14,6 +16,8 @@ public class SpecialMoves
         if (kingCell == null)
             kingCell = color == ChessColor.White ? Board.WhiteKing : Board.BlackKing;
 
+        Debug.Log("King Cell: " + kingCell.position);
+
         // Check each of enemy's potential moves
 
         // Loop through each tile on the board
@@ -21,9 +25,10 @@ public class SpecialMoves
         {
 
             // If the tile is occupied by an enemy piece
-            if (c.color == enemyColor && c.piece != ChessPiece.None)
+            if (c.color == enemyColor && c.piece != ChessPiece.None && c.piece != ChessPiece.King)
             {
-                var moves = c.GetMoves();
+                // Debug.Log();
+                Cell[] moves = c.GetMoves(true);
 
                 // Loop through each move the enemy piece can make
                 foreach (var move in moves)
@@ -31,10 +36,10 @@ public class SpecialMoves
 
                     // If the move is a king of the same color as the color being checked
                     if (move == kingCell)
-                    {
                         return true;
-                    }
                 }
+
+                moves = null;
             }
         }
 
@@ -49,16 +54,35 @@ public class SpecialMoves
     public static bool IsInCheckmate(ChessColor color)
     {
         Cell King = color == ChessColor.White ? Board.WhiteKing : Board.BlackKing;
+        var KingMoves = King.GetMoves();
 
-        foreach (var move in King.GetMoves())
+        if (KingMoves.Length == 0)
         {
-            if (!IsInCheck(color, move))
-                return false;
+            var c = IsInCheck(color);
+            if (c)
+            {
+                Debug.LogError("Checkmate: " + color);
+                Debug.Break();
+                return c;
+            }
+            return false;
         }
 
+        foreach (var move in KingMoves)
+        {
+            if (!IsInCheck(color, move))
+            {
+                Debug.LogWarning("Not In Check at: " + move.position);
+                return false;
+            }
+        }
+
+        Debug.LogError("Checkmate: " + color);
+        Debug.Break();
         return true;
     }
 
+    // TODO: Implement Castling
     public static void CheckCastle(ChessColor color)
     {
 

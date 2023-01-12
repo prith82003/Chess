@@ -11,6 +11,8 @@ public class CellDisplay : MonoBehaviour
     /// </summary>
     private void OnMouseDown()
     {
+
+
         // Deselecting the Current Cell if Clicked on Twice
         if (Game.selectedCell != null)
         {
@@ -25,6 +27,9 @@ public class CellDisplay : MonoBehaviour
         // Selecting a Piece
         if (cell.color == Game.PlayerColor && cell.piece != ChessPiece.None)
         {
+            if (!cell.clickable)
+                return;
+
             Debug.Log("Selected Own Piece");
             Game.selectedCell = cell;
             Debug.Log("Selected Cell: " + Game.selectedCell.position);
@@ -44,6 +49,9 @@ public class CellDisplay : MonoBehaviour
                 // Changing Selection to Different Piece
                 if (cell.color == Game.PlayerColor)
                 {
+                    if (!cell.clickable)
+                        return;
+
                     Debug.Log("Selected Own Piece");
                     Game.selectedCell = cell;
                     OnCellSelect?.Invoke(cell);

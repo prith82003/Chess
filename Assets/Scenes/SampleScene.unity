@@ -511,6 +511,7 @@ MonoBehaviour:
     position: {x: 2, y: 2}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &81370697
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -699,6 +700,7 @@ MonoBehaviour:
     position: {x: 7, y: 6}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &84478082
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -803,6 +805,7 @@ MonoBehaviour:
     position: {x: 3, y: 5}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &92122220
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -991,6 +994,7 @@ MonoBehaviour:
     position: {x: 6, y: 7}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &130986834
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1095,6 +1099,7 @@ MonoBehaviour:
     position: {x: 6, y: 6}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &138031237
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1199,6 +1204,7 @@ MonoBehaviour:
     position: {x: 3, y: 6}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &151860488
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1387,6 +1393,7 @@ MonoBehaviour:
     position: {x: 7, y: 5}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &198450236
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1575,6 +1582,7 @@ MonoBehaviour:
     position: {x: 0, y: 4}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &216764558
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1679,6 +1687,7 @@ MonoBehaviour:
     position: {x: 2, y: 1}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &227219507
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2287,6 +2296,7 @@ MonoBehaviour:
     position: {x: 6, y: 0}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &386517153
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2391,6 +2401,7 @@ MonoBehaviour:
     position: {x: 3, y: 3}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &389737338
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2579,6 +2590,7 @@ MonoBehaviour:
     position: {x: 6, y: 4}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &399065365
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2683,6 +2695,7 @@ MonoBehaviour:
     position: {x: 7, y: 1}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &429047058
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2787,6 +2800,7 @@ MonoBehaviour:
     position: {x: 2, y: 4}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &435343256
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2975,6 +2989,7 @@ MonoBehaviour:
     position: {x: 2, y: 3}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &458490725
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3163,6 +3178,7 @@ MonoBehaviour:
     position: {x: 1, y: 5}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &463625315
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3351,6 +3367,7 @@ MonoBehaviour:
     position: {x: 4, y: 1}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &490902860
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3707,6 +3724,7 @@ MonoBehaviour:
     position: {x: 7, y: 4}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &525786868
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4063,6 +4081,7 @@ MonoBehaviour:
     position: {x: 7, y: 2}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &606595089
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4251,6 +4270,7 @@ MonoBehaviour:
     position: {x: 3, y: 1}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &614005043
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4439,6 +4459,7 @@ MonoBehaviour:
     position: {x: 3, y: 4}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &616704191
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4711,6 +4732,7 @@ MonoBehaviour:
     position: {x: 2, y: 0}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &633864081
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4899,6 +4921,7 @@ MonoBehaviour:
     position: {x: 1, y: 3}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &670110443
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5087,6 +5110,7 @@ MonoBehaviour:
     position: {x: 3, y: 2}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &695353004
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5359,6 +5383,7 @@ MonoBehaviour:
     position: {x: 7, y: 3}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &729814055
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5463,6 +5488,7 @@ MonoBehaviour:
     position: {x: 6, y: 3}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &734872231
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5819,6 +5845,7 @@ MonoBehaviour:
     position: {x: 1, y: 4}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &806739130
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6595,6 +6622,7 @@ MonoBehaviour:
     position: {x: 7, y: 7}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &991551436
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6699,6 +6727,7 @@ MonoBehaviour:
     position: {x: 7, y: 0}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &1010026727
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6887,6 +6916,7 @@ MonoBehaviour:
     position: {x: 3, y: 7}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &1025890628
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6991,6 +7021,7 @@ MonoBehaviour:
     position: {x: 6, y: 2}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &1040169032
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7179,6 +7210,7 @@ MonoBehaviour:
     position: {x: 1, y: 7}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &1061875728
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7283,6 +7315,7 @@ MonoBehaviour:
     position: {x: 0, y: 5}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &1079531781
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7471,6 +7504,7 @@ MonoBehaviour:
     position: {x: 5, y: 3}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &1096471822
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7575,6 +7609,7 @@ MonoBehaviour:
     position: {x: 5, y: 7}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &1102784263
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7763,6 +7798,7 @@ MonoBehaviour:
     position: {x: 1, y: 6}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &1149185704
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8035,6 +8071,7 @@ MonoBehaviour:
     position: {x: 0, y: 6}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &1186522988
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8139,6 +8176,7 @@ MonoBehaviour:
     position: {x: 4, y: 0}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &1229710789
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8243,6 +8281,7 @@ MonoBehaviour:
     position: {x: 5, y: 5}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &1231750892
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8347,6 +8386,7 @@ MonoBehaviour:
     position: {x: 4, y: 4}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &1257144842
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8451,6 +8491,7 @@ MonoBehaviour:
     position: {x: 6, y: 5}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &1275729214
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8639,6 +8680,7 @@ MonoBehaviour:
     position: {x: 6, y: 1}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &1302087274
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8743,6 +8785,7 @@ MonoBehaviour:
     position: {x: 0, y: 1}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &1310462654
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8847,6 +8890,7 @@ MonoBehaviour:
     position: {x: 1, y: 1}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &1314237560
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8951,6 +8995,7 @@ MonoBehaviour:
     position: {x: 4, y: 2}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &1439609675
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -9223,6 +9268,7 @@ MonoBehaviour:
     position: {x: 4, y: 5}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &1506947846
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -9352,7 +9398,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1525059711}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -16.43, y: -0.27, z: 0}
+  m_LocalPosition: {x: -18.3, y: 0.32, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9411,6 +9457,7 @@ MonoBehaviour:
     position: {x: 4, y: 7}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &1533533442
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -9515,6 +9562,7 @@ MonoBehaviour:
     position: {x: 1, y: 2}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &1534005692
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -9619,6 +9667,7 @@ MonoBehaviour:
     position: {x: 5, y: 2}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &1543396659
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -9723,6 +9772,7 @@ MonoBehaviour:
     position: {x: 5, y: 0}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &1566215493
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -9827,6 +9877,7 @@ MonoBehaviour:
     position: {x: 0, y: 2}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &1577526904
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -9931,6 +9982,7 @@ MonoBehaviour:
     position: {x: 5, y: 4}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &1589087623
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -10035,6 +10087,7 @@ MonoBehaviour:
     position: {x: 3, y: 0}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &1603556411
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -10223,6 +10276,7 @@ MonoBehaviour:
     position: {x: 1, y: 0}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &1627524693
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -10327,6 +10381,7 @@ MonoBehaviour:
     position: {x: 2, y: 5}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &1654069988
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -10579,6 +10634,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firstPosition: {x: -4.375, y: -4.375}
   cell: {fileID: 3008081552481396617, guid: 0858d364f659a1c44bb27fe6e382fe90, type: 3}
+  BlackColor: {r: 0.62352943, g: 0.3803922, b: 0.19215688, a: 1}
+  WhiteColor: {r: 1, g: 0.9725491, b: 0.93725497, a: 1}
   dispPieces:
   - {fileID: 697310349, guid: ef51bbd0fadaa7f4aa224acc22967612, type: 3}
   - {fileID: -1011742325, guid: ef51bbd0fadaa7f4aa224acc22967612, type: 3}
@@ -10592,8 +10649,6 @@ MonoBehaviour:
   - {fileID: -512156796, guid: ef51bbd0fadaa7f4aa224acc22967612, type: 3}
   - {fileID: 1751867662, guid: ef51bbd0fadaa7f4aa224acc22967612, type: 3}
   - {fileID: 1121154564, guid: ef51bbd0fadaa7f4aa224acc22967612, type: 3}
-  BlackColor: {r: 0.62352943, g: 0.3803922, b: 0.19215688, a: 1}
-  WhiteColor: {r: 1, g: 0.9725491, b: 0.93725497, a: 1}
 --- !u!4 &1679967145
 Transform:
   m_ObjectHideFlags: 0
@@ -10685,6 +10740,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f25d92bae4b13a44aa5f9447b5c9d39c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  emptyColor: {r: 0.23634648, g: 1, b: 0, a: 0.5019608}
+  occupiedColor: {r: 1, g: 0, b: 0, a: 0.5019608}
 --- !u!1 &1737891454
 GameObject:
   m_ObjectHideFlags: 0
@@ -10737,6 +10794,7 @@ MonoBehaviour:
     position: {x: 5, y: 1}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &1737891457
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -11009,6 +11067,7 @@ MonoBehaviour:
     position: {x: 0, y: 0}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &1808384787
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -11197,6 +11256,7 @@ MonoBehaviour:
     position: {x: 4, y: 3}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &1812559474
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -11301,6 +11361,7 @@ MonoBehaviour:
     position: {x: 2, y: 6}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &1826254685
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -11489,6 +11550,7 @@ MonoBehaviour:
     position: {x: 0, y: 3}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &1840901591
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -11677,6 +11739,7 @@ MonoBehaviour:
     position: {x: 5, y: 6}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &1914384924
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -11949,6 +12012,7 @@ MonoBehaviour:
     position: {x: 0, y: 7}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &2002760879
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -12221,6 +12285,7 @@ MonoBehaviour:
     position: {x: 4, y: 6}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &2039553990
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -12409,6 +12474,7 @@ MonoBehaviour:
     position: {x: 2, y: 7}
     boardColor: {r: 0, g: 0, b: 0, a: 0}
     self: {fileID: 0}
+    display: 0
 --- !u!212 &2073089152
 SpriteRenderer:
   m_ObjectHideFlags: 0
