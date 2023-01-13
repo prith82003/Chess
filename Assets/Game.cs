@@ -79,9 +79,18 @@ public class Game : MonoBehaviour
         {
             if (cell == cB)
             {
+                Cell[,] OldBoard = Board.board.Clone() as Cell[,];
+
+                
                 cB.piece = cA.piece;
                 cB.color = cA.color;
                 cA.piece = ChessPiece.None;
+
+
+                if(SpecialMoves.IsInCheck(cB.color)){
+                    Board.board = OldBoard;
+                    Debug.Log("hello");
+                }
                 ClearDisplay(true);
                 Board.UpdateCell();
 
@@ -112,8 +121,8 @@ public class Game : MonoBehaviour
 
     void OnTurnStart(ChessColor color)
     {
-        if (SpecialMoves.IsInCheckmate(color))
-            GameOver();
+        // if (SpecialMoves.IsInCheckmate(color))
+        //     GameOver();
 
         Debug.Log("Color: " + color + ", Check: " + SpecialMoves.IsInCheck(color));
 
@@ -126,8 +135,8 @@ public class Game : MonoBehaviour
 
             foreach (var cell in Board.board)
             {
-                if (cell != King)
-                    cell.clickable = false;
+                // if (cell != King)
+                //     cell.clickable = false;
             }
         }
     }

@@ -65,6 +65,7 @@ public class Cell
     public Cell[] GetMoves(bool checkExtra = false)
     {
 
+
         // Debug.Log("Cell: (" + position.x + ", " + position.y + ") Piece: " + piece + " Color: " + color);
 
         // Retrieves the Types of Moves Each Piece Can Make
@@ -143,6 +144,7 @@ public class Cell
                         continue;
 
                     if (cell != null)
+
                         cells.Add(cell);
 
                     continue;
@@ -173,6 +175,7 @@ public class Cell
 
         return cells.ToArray();
     }
+
 }
 
 // Each class Represents the Type of Move that can be Made
