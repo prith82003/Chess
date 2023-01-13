@@ -29,6 +29,10 @@ public class Board : MonoBehaviour
     // Bottom left is 0, 0
     [SerializeField] GameObject cell;
     public static Cell[,] board;
+    public Color BlackColor;
+    public Color WhiteColor;
+    public static Cell WhiteKing;
+    public static Cell BlackKing;
 
     // Chess Pieces
     public List<Sprite> dispPieces;
@@ -39,7 +43,7 @@ public class Board : MonoBehaviour
     private void OnValidate()
     {
         pieces = dispPieces;
-        Debug.Log("Pieces: " + pieces.Count);
+        // Debug.Log("Pieces: " + pieces.Count);
     }
 
     /// <summary>
@@ -89,6 +93,9 @@ public class Board : MonoBehaviour
         return ChessPiece.None;
     }
 
+    /// <summary>
+    /// Commit Genocide on all Children of Game Controller Object (Board Tiles)
+    /// </summary>
     void DestroyChildren()
     {
         if (transform.childCount == 0)
@@ -97,9 +104,6 @@ public class Board : MonoBehaviour
         DestroyChildren();
     }
 
-    public Color BlackColor;
-    public Color WhiteColor;
-
     /// <summary>
     /// Initialise the board
     /// Spawns cells and sets their color and piece
@@ -107,22 +111,33 @@ public class Board : MonoBehaviour
 
     public void GenerateBoard()
     {
+        // Reset Board
         DestroyChildren();
+
+        if (board != null)
+        {
+            foreach (var cell in board)
+                cell.Remove();
+        }
+
         board = new Cell[BOARD_SIZE, BOARD_SIZE];
 
         for (int y = 0; y < BOARD_SIZE; y++)
         {
             for (int x = 0; x < BOARD_SIZE; x++)
             {
+                // Spawns Object for Board Tile, Sets Position, Sets Color, Sets Piece
                 var cellObj = Instantiate(cell, transform);
                 cellObj.transform.position = GetCellPosition(x, y);
                 ChessColor color = (y < 3) ? ChessColor.White : ChessColor.Black;
                 ChessPiece piece = CalculateChessPiece(x, y);
+
+                // Creates Cell Object to Represent Information
                 var newCell = new Cell(color, piece, new Vector2Int(x, y), cellObj);
                 cellObj.GetComponent<CellDisplay>().cell = newCell;
                 board[x, y] = newCell;
 
-                //Alternate color of cell white to black
+                // Alternate Colors, Each Row Starts with Different Color
                 var i = y * BOARD_SIZE + x;
                 if (y % 2 == 0)
                     i++;
@@ -134,8 +149,15 @@ public class Board : MonoBehaviour
         }
         UpdateCell();
     }
-    public static bool CheckIfBounds(Vector2Int pos) {
-        if (pos.x >= BOARD_SIZE || pos.x < 0 || pos.y >= BOARD_SIZE || pos.y < 0 ) 
+
+    /// <summary>
+    /// Check if the Given Position is within the bounds of the board
+    /// </summary>
+    /// <param name="pos"></param>
+    /// <returns></returns>
+    public static bool CheckIfBounds(Vector2Int pos)
+    {
+        if (pos.x >= BOARD_SIZE || pos.x < 0 || pos.y >= BOARD_SIZE || pos.y < 0)
             return false;
         return true;
     }

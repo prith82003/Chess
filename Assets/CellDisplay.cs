@@ -6,48 +6,61 @@ public class CellDisplay : MonoBehaviour
     public static System.Action<Cell, Cell> OnCellClick;
     public static System.Action<Cell> OnCellSelect;
 
+    /// <summary>
+    /// If the Mouse has been Clicked on this Cell, then select it
+    /// </summary>
     private void OnMouseDown()
     {
+
+
+        // Deselecting the Current Cell if Clicked on Twice
         if (Game.selectedCell != null)
         {
-            Debug.Log("Selected Cell: " + Game.selectedCell.position);
-            Debug.Log(".Clicked: " + cell.position);
+            if (Game.selectedCell == cell)
+            {
+                Game.selectedCell = null;
+                Game.ClearDisplay();
+                return;
+            }
         }
-        else
-            Debug.Log("Selected Cell: null");
 
-
+        // Selecting a Piece
         if (cell.color == Game.PlayerColor && cell.piece != ChessPiece.None)
         {
-            Debug.Log("Selected Own Piece");
+            if (!cell.clickable)
+                return;
+
+            // Debug.Log("Selected Own Piece");
             Game.selectedCell = cell;
-            Debug.Log("Selected Cell: " + Game.selectedCell.position);
+            // Debug.Log("Selected Cell: " + Game.selectedCell.position);
             OnCellSelect?.Invoke(cell);
         }
         else if (Game.selectedCell != null)
         {
-            Debug.Log("Selecting Move Piece");
+            // Selecting a Move to an Empty Cell
+            // Debug.Log("Selecting Move Piece");
             if (cell.piece == ChessPiece.None)
             {
-                Debug.Log("Attempting Move: " + Game.selectedCell.position + " -> " + cell.position);
-                if (Game.selectedCell == null)
-                    Debug.Log("Selected Cell: null");
-                if (cell == null)
-                    Debug.Log("Clicked Cell: null");
+                // Debug.Log("Attempting Move: " + Game.selectedCell.position + " -> " + cell.position);
                 OnCellClick(Game.selectedCell, cell);
             }
             else
             {
+                // Changing Selection to Different Piece
                 if (cell.color == Game.PlayerColor)
                 {
-                    Debug.Log("Selected Own Piece");
+                    if (!cell.clickable)
+                        return;
+
+                    // Debug.Log("Selected Own Piece");
                     Game.selectedCell = cell;
                     OnCellSelect?.Invoke(cell);
                 }
+                // Selecting a Move to an Enemy Cell
                 else
                 {
-                    Debug.Log("Selected Enemy Piece");
-                    Debug.Log("Attempting Move: " + Game.selectedCell.position + " -> " + cell.position);
+                    // Debug.Log("Selected Enemy Piece");
+                    // Debug.Log("Attempting Move: " + Game.selectedCell.position + " -> " + cell.position);
                     OnCellClick(Game.selectedCell, cell);
                 }
             }

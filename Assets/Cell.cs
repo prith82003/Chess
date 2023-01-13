@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,18 +14,30 @@ public class Cell
     public Color boardColor;
 
     public GameObject self;
-    
+    public bool display;
+    public bool clickable;
 
+    // Initialises the Cell
     public Cell(ChessColor color, ChessPiece piece, Vector2Int position, GameObject self)
     {
         this.color = color;
         this.piece = piece;
         this.position = position;
         this.self = self;
+        display = false;
+        clickable = true;
 
         Board.UpdateCell += UpdateCell;
     }
 
+    public void Remove()
+    {
+        Board.UpdateCell -= UpdateCell;
+    }
+
+    /// <summary>
+    /// Updates the cell's sprite
+    /// </summary>
     void UpdateCell()
     {
         if (piece == ChessPiece.None)
@@ -37,15 +50,31 @@ public class Cell
         if (color == ChessColor.Black)
             pieceIndex += 6;
         self.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = Board.pieces[pieceIndex];
+
+        // Tracks King Positions
+        if (piece == ChessPiece.King && color == ChessColor.White)
+            Board.WhiteKing = this;
+        else if (piece == ChessPiece.King && color == ChessColor.Black)
+            Board.BlackKing = this;
     }
 
-    public Cell[] GetMoves()
+    /// <summary>
+    /// Returns an Array of Cells that the Piece can Move To
+    /// </summary>
+    /// <returns>All Valid Cells the Piece can Move To</returns>
+    public Cell[] GetMoves(bool checkExtra = false)
     {
+
+        // Debug.Log("Cell: (" + position.x + ", " + position.y + ") Piece: " + piece + " Color: " + color);
+
+        // Retrieves the Types of Moves Each Piece Can Make
         List<Moves> moves = new List<Moves>();
         switch (piece)
         {
             case ChessPiece.Pawn:
                 moves.Add(new PawnMoves());
+                if (checkExtra)
+                    moves.Add(new DiagonalMoves());
                 break;
             case ChessPiece.Rook:
                 moves.Add(new BaseMoves());
@@ -68,50 +97,74 @@ public class Cell
 
         List<Cell> cells = new List<Cell>();
 
-        if (piece == ChessPiece.Pawn) // Check if piece exists diagonally to eliminate
+        // Check if piece exists diagonally to eliminate
+        if (piece == ChessPiece.Pawn)
         {
-            Vector2Int bob = new Vector2Int(position.x + 1, position.y + 1);
-            if(Board.CheckIfBounds(bob)){
-                var cell = Board.board[bob.x,bob.y];
-                if (cell.piece != ChessPiece.None && color != cell.color)
-                    cells.Add(cell); 
-            }
-            bob = new Vector2Int(position.x - 1, position.y + 1);
-            if (Board.CheckIfBounds(bob)) {
-                var cell = Board.board[bob.x,bob.y];
+            int yOffset = color == ChessColor.White ? 1 : -1;
+            Vector2Int pos = new Vector2Int(position.x + 1, position.y + yOffset);
+            if (Board.CheckIfBounds(pos))
+            {
+                var cell = Board.board[pos.x, pos.y];
                 if (cell.piece != ChessPiece.None && color != cell.color)
                     cells.Add(cell);
             }
-            
+            pos = new Vector2Int(position.x - 1, position.y + yOffset);
+            if (Board.CheckIfBounds(pos))
+            {
+                var cell = Board.board[pos.x, pos.y];
+                if (cell.piece != ChessPiece.None && color != cell.color)
+                    cells.Add(cell);
+            }
+
         }
 
         foreach (var move in moves)
         {
-            foreach (var m in move.GetMoves())
+            foreach (var b in move.GetMoves())
             {
-                if (piece == ChessPiece.Pawn || piece == ChessPiece.Horse || piece == ChessPiece.King) //Only one move
-                {
+                var m = b;
+                // Inverts the Y Axis if the Piece is Black
+                if (color == ChessColor.Black)
+                    m.y *= -1;
 
+                // Handles the Pieces That Can Move Only Once
+                if (piece == ChessPiece.Pawn || piece == ChessPiece.Horse || piece == ChessPiece.King)
+                {
                     Vector2Int pos = new Vector2Int(position.x + m.x, position.y + m.y);
                     if (!Board.CheckIfBounds(pos))
                         continue;
-                    var cell = Board.board[pos.x,pos.y];
-                    if ( cell.piece != ChessPiece.None && (cell.color == Game.PlayerColor || piece == ChessPiece.Pawn))
+
+                    // Check's If a Piece is Blocking the Move
+                    var cell = Board.board[pos.x, pos.y];
+                    if (cell.piece != ChessPiece.None && (cell.color == Game.PlayerColor || piece == ChessPiece.Pawn))
                         continue;
+
+                    if (piece == ChessPiece.King && SpecialMoves.IsInCheck(color, cell))
+                        continue;
+
                     if (cell != null)
                         cells.Add(cell);
+
                     continue;
                 }
 
+                // Handles the Pieces That Can Move Multiple Times
+                // Loops Since Piece Can Move Multiple Steps
                 for (int i = 1; i < 8; i++)
                 {
+                    // Multiplied By i, Imagine as Vector with Direction that is Multiplied by i 
+                    // to Increase Magnitude Step by Step
                     Vector2Int pos = new Vector2Int(position.x + m.x * i, position.y + m.y * i);
                     if (!Board.CheckIfBounds(pos))
                         break;
-                    var cell = Board.board[pos.x,pos.y];
-                    if (cell.piece != ChessPiece.None && cell.color == Game.PlayerColor)
+                    var cell = Board.board[pos.x, pos.y];
+
+                    // Check if Friendly Piece is Blocking the Move
+                    if (cell.piece != ChessPiece.None && cell.color == color)
                         break;
                     cells.Add(cell);
+
+                    // Stops the Loop if Enemy Piece is Blocking the Move
                     if (cell.piece != ChessPiece.None)
                         break;
                 }
@@ -122,6 +175,11 @@ public class Cell
     }
 }
 
+// Each class Represents the Type of Move that can be Made
+// PawnMoves = Moves that a Pawn can Make
+// BaseMoves = Horizontal and Vertical Moves
+// DiagonalMoves = Diagonal Moves
+// HorseMoves = Moves that a Horse can Make
 public abstract class Moves
 {
     internal abstract Vector2Int[] GetMoves();
