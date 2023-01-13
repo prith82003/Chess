@@ -51,10 +51,12 @@ public class Cell
             return;
         }
 
+        var board = self.transform.parent.GetComponent<Board>();
+
         int pieceIndex = (int)piece;
         if (color == ChessColor.Black)
             pieceIndex += 6;
-        self.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = Board.pieces[pieceIndex];
+        self.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = board.pieces[pieceIndex];
 
         // Tracks King Positions
         if (piece == ChessPiece.King && color == ChessColor.White)

@@ -97,6 +97,7 @@ public class Game : MonoBehaviour
                 cB.color = cA.color;
                 cA.piece = ChessPiece.None;
                 cA.doubleMove = false;
+                cB.doubleMove = false;
                 ClearDisplay(true);
                 Board.UpdateCell();
 

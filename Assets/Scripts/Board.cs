@@ -35,15 +35,9 @@ public class Board : MonoBehaviour
     public static Cell BlackKing;
 
     // Chess Pieces
-    public List<Sprite> dispPieces;
-    public static List<Sprite> pieces;
+    public List<Sprite> pieces;
 
     public static System.Action UpdateCell;
-
-    private void OnValidate()
-    {
-        pieces = dispPieces;
-    }
 
     /// <summary>
     /// Transform index to position
