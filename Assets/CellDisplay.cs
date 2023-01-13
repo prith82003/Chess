@@ -30,18 +30,18 @@ public class CellDisplay : MonoBehaviour
             if (!cell.clickable)
                 return;
 
-            Debug.Log("Selected Own Piece");
+            // Debug.Log("Selected Own Piece");
             Game.selectedCell = cell;
-            Debug.Log("Selected Cell: " + Game.selectedCell.position);
+            // Debug.Log("Selected Cell: " + Game.selectedCell.position);
             OnCellSelect?.Invoke(cell);
         }
         else if (Game.selectedCell != null)
         {
             // Selecting a Move to an Empty Cell
-            Debug.Log("Selecting Move Piece");
+            // Debug.Log("Selecting Move Piece");
             if (cell.piece == ChessPiece.None)
             {
-                Debug.Log("Attempting Move: " + Game.selectedCell.position + " -> " + cell.position);
+                // Debug.Log("Attempting Move: " + Game.selectedCell.position + " -> " + cell.position);
                 OnCellClick(Game.selectedCell, cell);
             }
             else
@@ -52,15 +52,15 @@ public class CellDisplay : MonoBehaviour
                     if (!cell.clickable)
                         return;
 
-                    Debug.Log("Selected Own Piece");
+                    // Debug.Log("Selected Own Piece");
                     Game.selectedCell = cell;
                     OnCellSelect?.Invoke(cell);
                 }
                 // Selecting a Move to an Enemy Cell
                 else
                 {
-                    Debug.Log("Selected Enemy Piece");
-                    Debug.Log("Attempting Move: " + Game.selectedCell.position + " -> " + cell.position);
+                    // Debug.Log("Selected Enemy Piece");
+                    // Debug.Log("Attempting Move: " + Game.selectedCell.position + " -> " + cell.position);
                     OnCellClick(Game.selectedCell, cell);
                 }
             }

@@ -33,7 +33,7 @@ public class Game : MonoBehaviour
     /// <param name="resetCell"></param>
     public static void ClearDisplay(bool resetCell = false)
     {
-        Debug.Log("Clearing Display Hard Reset: " + resetCell);
+        // Debug.Log("Clearing Display Hard Reset: " + resetCell);
         if (resetCell)
         {
             validMoves = null;

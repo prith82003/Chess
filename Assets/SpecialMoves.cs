@@ -16,7 +16,7 @@ public class SpecialMoves
         if (kingCell == null)
             kingCell = color == ChessColor.White ? Board.WhiteKing : Board.BlackKing;
 
-        Debug.Log("King Cell: " + kingCell.position);
+        // Debug.Log("King Cell: " + kingCell.position);
 
         // Check each of enemy's potential moves
 
@@ -72,7 +72,7 @@ public class SpecialMoves
         {
             if (!IsInCheck(color, move))
             {
-                Debug.LogWarning("Not In Check at: " + move.position);
+                Debug.LogWarning("Not In Checkmate at: " + move.position);
                 return false;
             }
         }

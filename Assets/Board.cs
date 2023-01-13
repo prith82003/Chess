@@ -43,7 +43,7 @@ public class Board : MonoBehaviour
     private void OnValidate()
     {
         pieces = dispPieces;
-        Debug.Log("Pieces: " + pieces.Count);
+        // Debug.Log("Pieces: " + pieces.Count);
     }
 
     /// <summary>

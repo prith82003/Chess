@@ -100,14 +100,15 @@ public class Cell
         // Check if piece exists diagonally to eliminate
         if (piece == ChessPiece.Pawn)
         {
-            Vector2Int pos = new Vector2Int(position.x + 1, position.y + 1);
+            int yOffset = color == ChessColor.White ? 1 : -1;
+            Vector2Int pos = new Vector2Int(position.x + 1, position.y + yOffset);
             if (Board.CheckIfBounds(pos))
             {
                 var cell = Board.board[pos.x, pos.y];
                 if (cell.piece != ChessPiece.None && color != cell.color)
                     cells.Add(cell);
             }
-            pos = new Vector2Int(position.x - 1, position.y + 1);
+            pos = new Vector2Int(position.x - 1, position.y + yOffset);
             if (Board.CheckIfBounds(pos))
             {
                 var cell = Board.board[pos.x, pos.y];
@@ -139,10 +140,7 @@ public class Cell
                         continue;
 
                     if (piece == ChessPiece.King && SpecialMoves.IsInCheck(color, cell))
-                    {
-                        Debug.Log("Skipped: (" + cell.position.x + ", " + cell.position.y + ")");
                         continue;
-                    }
 
                     if (cell != null)
                         cells.Add(cell);
@@ -162,7 +160,7 @@ public class Cell
                     var cell = Board.board[pos.x, pos.y];
 
                     // Check if Friendly Piece is Blocking the Move
-                    if (cell.piece != ChessPiece.None && cell.color == Game.PlayerColor)
+                    if (cell.piece != ChessPiece.None && cell.color == color)
                         break;
                     cells.Add(cell);
 
