@@ -16,6 +16,7 @@ public class Cell
     public GameObject self;
     public bool display;
     public bool clickable;
+    public bool doubleMove;
 
     // Initialises the Cell
     public Cell(ChessColor color, ChessPiece piece, Vector2Int position, GameObject self)
@@ -26,6 +27,7 @@ public class Cell
         this.self = self;
         display = false;
         clickable = true;
+        doubleMove = true;
 
         Board.UpdateCell += UpdateCell;
     }
@@ -40,6 +42,9 @@ public class Cell
     /// </summary>
     void UpdateCell()
     {
+        if (piece == ChessPiece.Pawn && (position.y == 0 || position.y == 7))
+            piece = ChessPiece.Queen;
+
         if (piece == ChessPiece.None)
         {
             self.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = null;
@@ -62,7 +67,7 @@ public class Cell
     /// Returns an Array of Cells that the Piece can Move To
     /// </summary>
     /// <returns>All Valid Cells the Piece can Move To</returns>
-    public Cell[] GetMoves(bool checkExtra = false)
+    public Cell[] GetMoves(bool checkExtra = false, bool checkCheck = true)
     {
 
 
@@ -76,6 +81,8 @@ public class Cell
                 moves.Add(new PawnMoves());
                 if (checkExtra)
                     moves.Add(new DiagonalMoves());
+                if (doubleMove)
+                    moves.Add(new DoubleMove());
                 break;
             case ChessPiece.Rook:
                 moves.Add(new BaseMoves());
@@ -143,9 +150,18 @@ public class Cell
                     if (piece == ChessPiece.King && SpecialMoves.IsInCheck(color, cell))
                         continue;
 
-                    if (cell != null)
+                    if (checkCheck && !IsLegalMove(cell))
+                        continue;
 
-                        cells.Add(cell);
+                    if (move.GetType() == (new DoubleMove()).GetType())
+                    {
+                        int yOffset = color == ChessColor.White ? 1 : -1;
+                        // Check if there is a piece in the way
+                        if (Board.board[position.x, position.y + yOffset].piece != ChessPiece.None)
+                            continue;
+                    }
+
+                    cells.Add(cell);
 
                     continue;
                 }
@@ -164,6 +180,10 @@ public class Cell
                     // Check if Friendly Piece is Blocking the Move
                     if (cell.piece != ChessPiece.None && cell.color == color)
                         break;
+
+                    if (checkCheck && !IsLegalMove(cell))
+                        continue;
+
                     cells.Add(cell);
 
                     // Stops the Loop if Enemy Piece is Blocking the Move
@@ -176,6 +196,45 @@ public class Cell
         return cells.ToArray();
     }
 
+    bool IsLegalMove(Cell cell)
+    {
+        // Check if After this cell moves to the cell given in the argument, if there is a check
+        // If there is a check, then the move is illegal
+        // If there is no check, then the move is legal
+
+        // Save the Piece that is in the Cell
+        ChessPiece Movepiece = cell.piece;
+        ChessColor Movecolor = cell.color;
+
+        // Move the Piece to the Cell
+        cell.piece = this.piece;
+        cell.color = this.color;
+
+        // Remove the Piece from the Current Cell
+        this.piece = ChessPiece.None;
+
+        // Check if the King is in Check
+        bool check = SpecialMoves.IsInCheck(color);
+
+        // Move the Piece Back to the Current Cell
+        this.piece = cell.piece;
+        this.color = cell.color;
+
+        // Move the Piece to the Cell
+        cell.piece = Movepiece;
+        cell.color = Movecolor;
+
+        if (check)
+        {
+            Debug.Log("This Move Would Cause A Check On: " + color);
+            Debug.Log("Current Position: " + position);
+            Debug.Log("Future Position: " + cell.position);
+            Debug.Log("Piece: " + this.piece);
+            Debug.Log("Piece Color: " + this.color);
+        }
+
+        return !check;
+    }
 }
 
 // Each class Represents the Type of Move that can be Made
@@ -193,6 +252,14 @@ public class PawnMoves : Moves
     internal override Vector2Int[] GetMoves()
     {
         return new Vector2Int[] { new Vector2Int(0, 1) };
+    }
+}
+
+public class DoubleMove : Moves
+{
+    internal override Vector2Int[] GetMoves()
+    {
+        return new Vector2Int[] { new Vector2Int(0, 2) };
     }
 }
 

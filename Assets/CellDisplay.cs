@@ -12,6 +12,8 @@ public class CellDisplay : MonoBehaviour
     private void OnMouseDown()
     {
 
+        if (Game.isPaused)
+            return;
 
         // Deselecting the Current Cell if Clicked on Twice
         if (Game.selectedCell != null)

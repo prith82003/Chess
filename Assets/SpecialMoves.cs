@@ -28,7 +28,7 @@ public class SpecialMoves
             if (c.color == enemyColor && c.piece != ChessPiece.None && c.piece != ChessPiece.King)
             {
                 // Debug.Log();
-                Cell[] moves = c.GetMoves(true);
+                Cell[] moves = c.GetMoves(true, false);
 
                 // Loop through each move the enemy piece can make
                 foreach (var move in moves)
@@ -36,7 +36,14 @@ public class SpecialMoves
 
                     // If the move is a king of the same color as the color being checked
                     if (move == kingCell)
+                    {
+                        Debug.LogError("Check: " + color);
+                        Debug.Log("King Cell: " + kingCell.position);
+                        Debug.Log("Enemy Color: " + enemyColor);
+                        Debug.Log("Check Cell: " + move.position);
+
                         return true;
+                    }
                 }
 
                 moves = null;
@@ -53,38 +60,54 @@ public class SpecialMoves
     /// <returns></returns>
     public static bool IsInCheckmate(ChessColor color)
     {
-        Cell King = color == ChessColor.White ? Board.WhiteKing : Board.BlackKing;
-        var KingMoves = King.GetMoves();
-
-        if (KingMoves.Length == 0)
-        {
-            var c = IsInCheck(color);
-            if (c)
-            {
-                Debug.LogError("Checkmate: " + color);
-                Debug.Break();
-                return c;
-            }
+        // If the color is not in check, return false
+        if (!IsInCheck(color))
             return false;
-        }
 
-        foreach (var move in KingMoves)
+        // Loop through each tile on the board
+        foreach (var cell in Board.board)
         {
-            if (!IsInCheck(color, move))
+            if (cell.color == color && cell.piece != ChessPiece.None && cell.piece != ChessPiece.King)
             {
-                Debug.LogWarning("Not In Checkmate at: " + move.position);
-                return false;
+                // If Legal Moves Still Exist For Any Piece, Must not Be Checkmate
+                Cell[] moves = cell.GetMoves(true);
+
+                if (moves.Length > 0)
+                    return false;
             }
         }
 
-        Debug.LogError("Checkmate: " + color);
-        Debug.Break();
         return true;
     }
 
     // TODO: Implement Castling
-    public static void CheckCastle(ChessColor color)
+    public static void CheckCastle(Cell cell)
     {
+        var posLeft = new Vector2Int(cell.position.x - 1, cell.position.y);
+        var posRight = new Vector2Int(cell.position.x + 1, cell.position.y);
+
+
+        if (Board.CheckIfBounds(posLeft))
+        {
+            var cellLeft = Board.board[posLeft.x, posLeft.y];
+            if ((cellLeft.piece == ChessPiece.Rook || cellLeft.piece == ChessPiece.King) && cellLeft.color == cell.color)
+            {
+                Debug.Log("Swap Left. Cell: " + cell.piece + ", Left: " + cellLeft.piece);
+                GameObject.FindObjectOfType<Game>().Swap(cellLeft, cell);
+                return;
+            }
+        }
+
+        if (Board.CheckIfBounds(posRight))
+        {
+            var cellRight = Board.board[posRight.x, posRight.y];
+            if ((cellRight.piece == ChessPiece.Rook || cellRight.piece == ChessPiece.King) && cellRight.color == cell.color)
+            {
+                Debug.Log("Swap Right. Cell: " + cell.piece + ", Right: " + cellRight.piece);
+                GameObject.FindObjectOfType<Game>().Swap(cellRight, cell);
+            }
+        }
+
 
     }
 }

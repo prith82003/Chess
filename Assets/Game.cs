@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum CheckState { None, Check, Checkmate };
 
@@ -11,6 +12,7 @@ public class Game : MonoBehaviour
     public static ChessColor PlayerColor;
     public Color emptyColor;
     public Color occupiedColor;
+    public static bool isPaused;
 
     public static System.Action<ChessColor, ChessPiece> OnTurnFinish;
 
@@ -22,9 +24,20 @@ public class Game : MonoBehaviour
 
     void Start()
     {
-        PlayerColor = ChessColor.White;
-        selectedCell = null;
-        validMoves = null;
+        RestartGame();
+    }
+
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape) && !isPaused)
+        {
+            Pause();
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape) && isPaused)
+        {
+            Resume();
+        }
     }
 
     /// <summary>
@@ -33,7 +46,7 @@ public class Game : MonoBehaviour
     /// <param name="resetCell"></param>
     public static void ClearDisplay(bool resetCell = false)
     {
-        // Debug.Log("Clearing Display Hard Reset: " + resetCell);
+        Debug.Log("Clearing Display Hard Reset: " + resetCell);
         if (resetCell)
         {
             validMoves = null;
@@ -75,26 +88,19 @@ public class Game : MonoBehaviour
     /// <param name="cB">Cell to Move To</param>
     void MovePiece(Cell cA, Cell cB)
     {
+
         foreach (var cell in validMoves)
         {
             if (cell == cB)
             {
-                Cell[,] OldBoard = Board.board.Clone() as Cell[,];
-
-                
                 cB.piece = cA.piece;
                 cB.color = cA.color;
                 cA.piece = ChessPiece.None;
-
-
-                if(SpecialMoves.IsInCheck(cB.color)){
-                    Board.board = OldBoard;
-                    Debug.Log("hello");
-                }
+                cA.doubleMove = false;
                 ClearDisplay(true);
                 Board.UpdateCell();
 
-                OnFinishTurn(cB.color, cB.piece);
+                OnFinishTurn(cB.color, cB);
                 return;
             }
         }
@@ -102,18 +108,25 @@ public class Game : MonoBehaviour
         ClearDisplay(true);
     }
 
-    void OnFinishTurn(ChessColor color, ChessPiece piece)
+    public void Swap(Cell cA, Cell cB)
     {
-        OnTurnFinish?.Invoke(color, piece);
+        var tempPiece = cA.piece;
+        var tempColor = cA.color;
+        cA.piece = cB.piece;
+        cA.color = cB.color;
+        cB.piece = tempPiece;
+        cB.color = tempColor;
+        ClearDisplay(true);
+        Board.UpdateCell();
+    }
+
+    void OnFinishTurn(ChessColor color, Cell cell)
+    {
+        OnTurnFinish?.Invoke(color, cell.piece);
         ChessColor nextColor = color == ChessColor.White ? ChessColor.Black : ChessColor.White;
 
-        if (piece == ChessPiece.King || piece == ChessPiece.Rook)
-            SpecialMoves.CheckCastle(color);
-
-        foreach (var cell in Board.board)
-        {
-            cell.clickable = true;
-        }
+        if (cell.piece == ChessPiece.King || cell.piece == ChessPiece.Rook)
+            SpecialMoves.CheckCastle(cell);
 
         PlayerColor = nextColor;
         OnTurnStart(nextColor);
@@ -121,8 +134,8 @@ public class Game : MonoBehaviour
 
     void OnTurnStart(ChessColor color)
     {
-        // if (SpecialMoves.IsInCheckmate(color))
-        //     GameOver();
+        if (SpecialMoves.IsInCheckmate(color))
+            GameOver();
 
         Debug.Log("Color: " + color + ", Check: " + SpecialMoves.IsInCheck(color));
 
@@ -133,18 +146,65 @@ public class Game : MonoBehaviour
             selectedCell = King;
             DisplayMoves(King);
 
-            foreach (var cell in Board.board)
-            {
-                // if (cell != King)
-                //     cell.clickable = false;
-            }
+            // foreach (var cell in Board.board)
+            // {
+            //     if (cell != King)
+            //         cell.clickable = false;
+            // }
         }
     }
 
     // TODO: Implement GameOver
     // TODO: Regenerating the Game Board
-    void GameOver()
-    {
 
+    public GameObject GameOverPanel;
+    public GameObject Screen;
+    public const float PanelAlpha = 220f;
+    public float PanelFadeSpeed = 0.5f;
+
+    public IEnumerator GameOver()
+    {
+        GameOverPanel.SetActive(true);
+        var panel = GameOverPanel.GetComponent<Image>();
+        var color = panel.color;
+        color.a = 0;
+        panel.color = color;
+
+        while (color.a < ((PanelAlpha + PanelFadeSpeed * Time.deltaTime) / 255f))
+        {
+            Debug.Log("Color A: " + color.a);
+            color.a += PanelFadeSpeed * Time.deltaTime;
+            panel.color = color;
+            yield return null;
+        }
+
+        Screen.SetActive(true);
     }
+
+    public void Pause()
+    {
+        GameOverPanel.SetActive(true);
+        Screen.SetActive(true);
+        isPaused = true;
+    }
+
+    public void Resume()
+    {
+        GameOverPanel.SetActive(false);
+        Screen.SetActive(false);
+        isPaused = false;
+    }
+
+    public void RestartGame()
+    {
+        isPaused = false;
+        PlayerColor = ChessColor.White;
+        selectedCell = null;
+        validMoves = null;
+        GameOverPanel.SetActive(false);
+        Screen.SetActive(false);
+        FindObjectOfType<Board>().GenerateBoard();
+    }
+
+    public static void Quit() => Application.Quit();
 }

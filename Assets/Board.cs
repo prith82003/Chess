@@ -43,7 +43,6 @@ public class Board : MonoBehaviour
     private void OnValidate()
     {
         pieces = dispPieces;
-        // Debug.Log("Pieces: " + pieces.Count);
     }
 
     /// <summary>
@@ -161,5 +160,4 @@ public class Board : MonoBehaviour
             return false;
         return true;
     }
-    void Start() => GenerateBoard();
 }
