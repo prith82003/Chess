@@ -1,6 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 // This script initialises the board and pieces for the chess game
 
@@ -166,22 +166,22 @@ public class Board : MonoBehaviour
         return true;
     }
 
+    Dictionary<char, ChessPiece> FENPiece = new Dictionary<char, ChessPiece>()
+    {
+        ['k'] = ChessPiece.King,
+        ['q'] = ChessPiece.Queen,
+        ['r'] = ChessPiece.Rook,
+        ['b'] = ChessPiece.Bishop,
+        ['n'] = ChessPiece.Horse,
+        ['p'] = ChessPiece.Pawn
+    };
+
     /// <summary>
     /// Loads a FEN String onto Board
     /// </summary>
     public void LoadFENString()
     {
         ClearBoard();
-
-        var FENPiece = new Dictionary<char, ChessPiece>()
-        {
-            ['k'] = ChessPiece.King,
-            ['q'] = ChessPiece.Queen,
-            ['r'] = ChessPiece.Rook,
-            ['b'] = ChessPiece.Bishop,
-            ['n'] = ChessPiece.Horse,
-            ['p'] = ChessPiece.Pawn
-        };
 
         int boardIndex = 0;
         string FENBoard = FENString.Split(' ')[0];
@@ -224,5 +224,49 @@ public class Board : MonoBehaviour
 
             UpdateCell();
         }
+    }
+
+    public void WriteFENString()
+    {
+        string FENString = "";
+
+        for (int y = BOARD_SIZE - 1; y >= 0; y--)
+        {
+            int emptyCount = 1;
+            for (int x = 0; x < BOARD_SIZE; x++)
+            {
+                var cell = board[x, y];
+
+                if (cell.piece == ChessPiece.None)
+                {
+                    if (x == BOARD_SIZE - 1 && y != 0)
+                        FENString += emptyCount + "/";
+                    else
+                        emptyCount++;
+                    continue;
+                }
+                else
+                {
+                    if (emptyCount > 1)
+                    {
+                        FENString += emptyCount;
+                        emptyCount = 1;
+                    }
+                }
+
+                var piece = FENPiece.FirstOrDefault(p => p.Value == cell.piece).Key;
+                if (cell.color == ChessColor.White)
+                    piece = char.ToUpper(piece);
+
+                FENString += piece;
+                if (x == BOARD_SIZE - 1 && y != 0)
+                    FENString += "/";
+            }
+        }
+
+        // TODO: Add Castling, En Passant, Half Move Clock, Full Move Clock
+
+        FENString += " " + ((Game.PlayerColor == ChessColor.White) ? "w" : "b") + " ---- - 0 1";
+        Debug.Log("FEN String: " + FENString);
     }
 }

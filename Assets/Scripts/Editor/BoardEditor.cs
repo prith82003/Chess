@@ -15,6 +15,9 @@ public class BoardEditor : Editor
         if (GUILayout.Button("Load FEN String"))
             board.LoadFENString();
 
+        if (GUILayout.Button("Write FEN String"))
+            board.WriteFENString();
+
         if (GUILayout.Button("Clear Board"))
             board.ClearBoard();
     }
