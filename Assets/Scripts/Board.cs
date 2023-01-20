@@ -26,9 +26,10 @@ public class Board : MonoBehaviour
         }
     }
 
+    // Board
     // Bottom left is 0, 0
-    [SerializeField] GameObject cell;
     public static Cell[,] board;
+    [SerializeField] GameObject cell;
     public Color BlackColor;
     public Color WhiteColor;
     public static Cell WhiteKing;
@@ -36,6 +37,7 @@ public class Board : MonoBehaviour
 
     // Chess Pieces
     public List<Sprite> pieces;
+    public string FENString;
 
     public static System.Action UpdateCell;
 
@@ -97,12 +99,7 @@ public class Board : MonoBehaviour
         DestroyChildren();
     }
 
-    /// <summary>
-    /// Initialise the board
-    /// Spawns cells and sets their color and piece
-    /// </summary>
-
-    public void GenerateBoard()
+    public void ClearBoard()
     {
         // Reset Board
         DestroyChildren();
@@ -112,32 +109,46 @@ public class Board : MonoBehaviour
             foreach (var cell in board)
                 cell.Remove();
         }
-
         board = new Cell[BOARD_SIZE, BOARD_SIZE];
 
         for (int y = 0; y < BOARD_SIZE; y++)
         {
             for (int x = 0; x < BOARD_SIZE; x++)
             {
-                // Spawns Object for Board Tile, Sets Position, Sets Color, Sets Piece
                 var cellObj = Instantiate(cell, transform);
+                var newCell = new Cell(ChessColor.White, ChessPiece.None, new Vector2Int(x, y), cellObj);
                 cellObj.transform.position = GetCellPosition(x, y);
-                ChessColor color = (y < 3) ? ChessColor.White : ChessColor.Black;
-                ChessPiece piece = CalculateChessPiece(x, y);
-
-                // Creates Cell Object to Represent Information
-                var newCell = new Cell(color, piece, new Vector2Int(x, y), cellObj);
                 cellObj.GetComponent<CellDisplay>().cell = newCell;
                 board[x, y] = newCell;
 
                 // Alternate Colors, Each Row Starts with Different Color
-                var i = y * BOARD_SIZE + x;
-                if (y % 2 == 0)
-                    i++;
-
-                var col = (i % 2 == 0) ? WhiteColor : BlackColor;
+                var i = y + x;
+                var col = (i % 2 != 0) ? WhiteColor : BlackColor;
                 cellObj.GetComponent<SpriteRenderer>().color = col;
                 newCell.boardColor = col;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Initialise the board
+    /// Spawns cells and sets their color and piece
+    /// </summary>
+    public void GenerateBoard()
+    {
+        ClearBoard();
+
+        for (int y = 0; y < BOARD_SIZE; y++)
+        {
+            for (int x = 0; x < BOARD_SIZE; x++)
+            {
+                // Spawns Object for Board Tile, Sets Position, Sets Color, Sets Piece
+                ChessColor color = (y < 3) ? ChessColor.White : ChessColor.Black;
+                ChessPiece piece = CalculateChessPiece(x, y);
+
+                // Creates Cell Object to Represent Information
+                board[x, y].color = color;
+                board[x, y].piece = piece;
             }
         }
         UpdateCell();
@@ -153,5 +164,65 @@ public class Board : MonoBehaviour
         if (pos.x >= BOARD_SIZE || pos.x < 0 || pos.y >= BOARD_SIZE || pos.y < 0)
             return false;
         return true;
+    }
+
+    /// <summary>
+    /// Loads a FEN String onto Board
+    /// </summary>
+    public void LoadFENString()
+    {
+        ClearBoard();
+
+        var FENPiece = new Dictionary<char, ChessPiece>()
+        {
+            ['k'] = ChessPiece.King,
+            ['q'] = ChessPiece.Queen,
+            ['r'] = ChessPiece.Rook,
+            ['b'] = ChessPiece.Bishop,
+            ['n'] = ChessPiece.Horse,
+            ['p'] = ChessPiece.Pawn
+        };
+
+        int boardIndex = 0;
+        string FENBoard = FENString.Split(' ')[0];
+
+        foreach (var c in FENBoard)
+        {
+            if (char.IsDigit(c))
+            {
+                boardIndex += int.Parse(c.ToString());
+                continue;
+            }
+
+            int Rawrow = boardIndex / BOARD_SIZE;
+            int col = boardIndex % BOARD_SIZE;
+
+            int row = BOARD_SIZE - Rawrow - 1;
+
+            // Go to next row if c is '/'
+            if (c == '/')
+                continue;
+
+            ChessColor color = char.IsUpper(c) ? ChessColor.White : ChessColor.Black;
+            ChessPiece piece = FENPiece[char.ToLower(c)];
+
+            try
+            {
+                Debug.Log("Piece at (" + col + ", " + row + "): " + piece + ", Color: " + color + ", FEN char: " + c);
+
+                board[col, row].color = color;
+                board[col, row].piece = piece;
+                boardIndex++;
+            }
+            catch
+            {
+                Debug.Log("Error at (" + col + ", " + row + ")");
+            }
+
+            Game.PlayerColor = (FENString.Split(' ')[1] == "w") ? ChessColor.White : ChessColor.Black;
+
+
+            UpdateCell();
+        }
     }
 }

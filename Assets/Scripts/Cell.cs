@@ -17,6 +17,7 @@ public class Cell
     public bool display;
     public bool clickable;
     public bool doubleMove;
+    public Vector2Int FENPos;
 
     // Initialises the Cell
     public Cell(ChessColor color, ChessPiece piece, Vector2Int position, GameObject self)
@@ -32,10 +33,7 @@ public class Cell
         Board.UpdateCell += UpdateCell;
     }
 
-    public void Remove()
-    {
-        Board.UpdateCell -= UpdateCell;
-    }
+    public void Remove() => Board.UpdateCell -= UpdateCell;
 
     /// <summary>
     /// Updates the cell's sprite
