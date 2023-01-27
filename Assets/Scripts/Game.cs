@@ -13,6 +13,8 @@ public class Game : MonoBehaviour
     public Color emptyColor;
     public Color occupiedColor;
     public static bool isPaused;
+    public int testIterations;
+    public TextAsset dataFile;
 
     public static System.Action<ChessColor, ChessPiece> OnTurnFinish;
 
@@ -86,8 +88,21 @@ public class Game : MonoBehaviour
     /// </summary>
     /// <param name="cA">Cell to Move From</param>
     /// <param name="cB">Cell to Move To</param>
-    void MovePiece(Cell cA, Cell cB)
+    public void MovePiece(Cell cA, Cell cB, bool force = false)
     {
+        if (force)
+        {
+            cB.piece = cA.piece;
+            cB.color = cA.color;
+            cA.piece = ChessPiece.None;
+            cA.doubleMove = false;
+            cB.doubleMove = false;
+            ClearDisplay(true);
+            Board.UpdateCell();
+
+            OnFinishTurn(cB.color, cB);
+            return;
+        }
 
         foreach (var cell in validMoves)
         {
@@ -121,7 +136,7 @@ public class Game : MonoBehaviour
         Board.UpdateCell();
     }
 
-    void OnFinishTurn(ChessColor color, Cell cell)
+    public void OnFinishTurn(ChessColor color, Cell cell)
     {
         OnTurnFinish?.Invoke(color, cell.piece);
         ChessColor nextColor = color == ChessColor.White ? ChessColor.Black : ChessColor.White;
@@ -133,30 +148,18 @@ public class Game : MonoBehaviour
         OnTurnStart(nextColor);
     }
 
-    void OnTurnStart(ChessColor color)
+    public void OnTurnStart(ChessColor color)
     {
         if (SpecialMoves.IsInCheckmate(color))
-            GameOver();
+        {
+            StartCoroutine(GameOver());
+            return;
+        }
 
         Debug.Log("Color: " + color + ", Check: " + SpecialMoves.IsInCheck(color));
-
-        if (SpecialMoves.IsInCheck(color))
-        {
-            var King = color == ChessColor.White ? Board.WhiteKing : Board.BlackKing;
-
-            selectedCell = King;
-            DisplayMoves(King);
-
-            // foreach (var cell in Board.board)
-            // {
-            //     if (cell != King)
-            //         cell.clickable = false;
-            // }
-        }
     }
 
-    // TODO: Implement GameOver
-    // TODO: Regenerating the Game Board
+    // UI
 
     public GameObject GameOverPanel;
     public GameObject Screen;
@@ -165,6 +168,7 @@ public class Game : MonoBehaviour
 
     public IEnumerator GameOver()
     {
+        Debug.Break();
         GameOverPanel.SetActive(true);
         var panel = GameOverPanel.GetComponent<Image>();
         var color = panel.color;
@@ -205,6 +209,7 @@ public class Game : MonoBehaviour
         GameOverPanel.SetActive(false);
         Screen.SetActive(false);
         FindObjectOfType<Board>().GenerateBoard();
+        // OnTurnStart(PlayerColor);
     }
 
     public static void Quit() => Application.Quit();

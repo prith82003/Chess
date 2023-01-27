@@ -3,7 +3,7 @@ using UnityEngine;
 public class CellDisplay : MonoBehaviour
 {
     public Cell cell;
-    public static System.Action<Cell, Cell> OnCellClick;
+    public static System.Action<Cell, Cell, bool> OnCellClick;
     public static System.Action<Cell> OnCellSelect;
 
     /// <summary>
@@ -44,7 +44,7 @@ public class CellDisplay : MonoBehaviour
             if (cell.piece == ChessPiece.None)
             {
                 // Debug.Log("Attempting Move: " + Game.selectedCell.position + " -> " + cell.position);
-                OnCellClick(Game.selectedCell, cell);
+                OnCellClick(Game.selectedCell, cell, false);
             }
             else
             {
@@ -63,7 +63,7 @@ public class CellDisplay : MonoBehaviour
                 {
                     // Debug.Log("Selected Enemy Piece");
                     // Debug.Log("Attempting Move: " + Game.selectedCell.position + " -> " + cell.position);
-                    OnCellClick(Game.selectedCell, cell);
+                    OnCellClick(Game.selectedCell, cell, false);
                 }
             }
         }

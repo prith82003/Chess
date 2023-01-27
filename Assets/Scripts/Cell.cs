@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Diagnostics;
 public enum ChessPiece { None = 9, Pawn = 0, Rook = 1, Horse = 2, Bishop = 3, Queen = 4, King = 5 };
 public enum ChessColor { White, Black };
 
@@ -69,11 +70,11 @@ public class Cell
     /// <returns>All Valid Cells the Piece can Move To</returns>
     public Cell[] GetMoves(bool checkExtra = false, bool checkCheck = true)
     {
-
-
         // Debug.Log("Cell: (" + position.x + ", " + position.y + ") Piece: " + piece + " Color: " + color);
-
         // Retrieves the Types of Moves Each Piece Can Make
+
+        Stopwatch sw = Stopwatch.StartNew();
+
         List<Moves> moves = new List<Moves>();
         switch (piece)
         {
@@ -193,6 +194,8 @@ public class Cell
             }
         }
 
+        sw.Stop();
+        RandomTester.WriteLine(sw.ElapsedTicks, checkCheck);
         return cells.ToArray();
     }
 
@@ -226,11 +229,11 @@ public class Cell
 
         if (check)
         {
-            Debug.Log("This Move Would Cause A Check On: " + color);
-            Debug.Log("Current Position: " + position);
-            Debug.Log("Future Position: " + cell.position);
-            Debug.Log("Piece: " + this.piece);
-            Debug.Log("Piece Color: " + this.color);
+            UnityEngine.Debug.Log("This Move Would Cause A Check On: " + color);
+            UnityEngine.Debug.Log("Current Position: " + position);
+            UnityEngine.Debug.Log("Future Position: " + cell.position);
+            UnityEngine.Debug.Log("Piece: " + this.piece);
+            UnityEngine.Debug.Log("Piece Color: " + this.color);
         }
 
         return !check;

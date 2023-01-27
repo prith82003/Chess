@@ -37,9 +37,8 @@ public class Board : MonoBehaviour
 
     // Chess Pieces
     public List<Sprite> pieces;
-    public string FENString;
-
     public static System.Action UpdateCell;
+    public string FENString = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w";
 
     /// <summary>
     /// Transform index to position
@@ -177,7 +176,8 @@ public class Board : MonoBehaviour
     };
 
     /// <summary>
-    /// Loads a FEN String onto Board
+    /// Loads a FEN Sequence onto Board
+    /// More Information: https://www.chess.com/terms/fen-chess
     /// </summary>
     public void LoadFENString()
     {
@@ -221,11 +221,15 @@ public class Board : MonoBehaviour
 
             Game.PlayerColor = (FENString.Split(' ')[1] == "w") ? ChessColor.White : ChessColor.Black;
 
-
             UpdateCell();
+
+            // TODO: Add Castling, En Passant, Half Move Clock, Full Move Clock
         }
     }
 
+    /// <summary>
+    /// Outputs the current Board Configuration as FEN Sequence
+    /// </summary>
     public void WriteFENString()
     {
         string FENString = "";
@@ -268,5 +272,17 @@ public class Board : MonoBehaviour
 
         FENString += " " + ((Game.PlayerColor == ChessColor.White) ? "w" : "b") + " ---- - 0 1";
         Debug.Log("FEN String: " + FENString);
+    }
+
+    public static Cell GetRandomPiece(ChessColor color)
+    {
+        // Get a random cell with a piece of color on board
+        var cells = board.Cast<Cell>().Where(c => c.color == color && c.piece != ChessPiece.None).ToList();
+        return cells[Random.Range(0, cells.Count)];
+    }
+
+    public static List<Cell> GetPieces(ChessColor color)
+    {
+        return board.Cast<Cell>().Where(c => c.color == color && c.piece != ChessPiece.None).ToList();
     }
 }
